@@ -36,7 +36,33 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: {
+    //   // change xxx-api/login => mock/login
+    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
+    //   // [process.env.VUE_APP_BASE_API]: {
+    //   //   target: `http://localhost:${port}`,
+    //   //   changeOrigin: true,
+    //   //   pathRewrite: {
+    //   //     ['^' + process.env.VUE_APP_BASE_API]: ''
+    //   //   }
+    //   // },
+    //   // '/dev-api/vue-admin-template': {
+    //   //   target: `http://localhost:5050`,//这是你要跨域请求的地址前缀
+    //   //   changeOrigin: true,//开启跨域
+    //   //   rewrite: path => path.replace(/^\/dev-api/, ''),//去除前缀api
+    //   // },
+      '/api': {
+        target: `https://mp.jingshun.fun/mp/admin`,//这是你要跨域请求的地址前缀
+        changeOrigin: true,//开启跨域
+        "pathRewrite": {     // 如果接口本身没有/api需要通过pathRewrite来重写了地址,这里把/api转成‘ ’
+          "^/api": ""
+        }
+      }
+
+    },
+    //after: require('./mock/mock-server.js')
+ //   before: require('./mock/mock-server.js')
+    
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
